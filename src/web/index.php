@@ -12,109 +12,110 @@ header("Pragma: no-cache");
 
 <head>
 
-<title>Anulytics, Erneh</title>
-<link type="text/css" rel="stylesheet" href="css/index.css" />
-<script type="text/javascript" src="js/lib/zepto.min.js"></script>
+    <title>Anulytics, Erneh</title>
+    <link type="text/css" rel="stylesheet" href="css/index.css"/>
+    <script type="text/javascript" src="js/lib/zepto.min.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-console.log("here!");
+        console.log("here!");
 
-var ER = {};
+        var ER = {};
 
-ER.ST_BEFORE_GAME = 0;
-ER.ST_BEFORE_PULL = 10;
-ER.ST_AFTER_THROW = 20;
+        ER.ST_BEFORE_GAME = 0;
+        ER.ST_BEFORE_PULL = 10;
+        ER.ST_AFTER_THROW = 20;
 
-$(function() {
+        $(function () {
 
-    var $buttons = $('button.button.game');
-    var $buttonsBeforePull = $('button.button.game.before-pull');
-    var $buttonsAfterThrow = $('button.button.game.after-throw');
+            var $buttons = $('button.button.game');
+            var $buttonsBeforePull = $('button.button.game.before-pull');
+            var $buttonsAfterThrow = $('button.button.game.after-throw');
 
-    function f() {
-        console.log("f() off!");
-    }
+            function f() {
+                console.log("f() off!");
+            }
 
-    function deactivateAllButtons() {
-        $buttons.prop('disabled', true);
-        $buttons.css('background-color', '#777');
-    };
+            function deactivateAllButtons() {
+                $buttons.prop('disabled', true);
+                $buttons.css('background-color', '#777');
+            };
 
-    function activateBeforePullButtons() {
-        deactivateAllButtons();
-        $buttonsBeforePull.prop('disabled', false);
-        $buttonsBeforePull.css('background-color', '#444');
-    };
-    function activateAfterThrowButtons() {
-        deactivateAllButtons();
-        $buttonsAfterThrow.prop('disabled', false)
-        $buttonsAfterThrow.css('background-color', '#444');
-    };
+            function activateBeforePullButtons() {
+                deactivateAllButtons();
+                $buttonsBeforePull.prop('disabled', false);
+                $buttonsBeforePull.css('background-color', '#444');
+            };
 
-    let $buttonPullFromLeft = $('button#pull-from-left');
-    let $buttonPullFromRight = $('button#pull-from-right');
-    let $buttonPull = $('button#pull');
+            function activateAfterThrowButtons() {
+                deactivateAllButtons();
+                $buttonsAfterThrow.prop('disabled', false);
+                $buttonsAfterThrow.css('background-color', '#444');
+            };
 
-    console.log("button#pull-from-left");
-    console.log($buttonPullFromLeft);
-    $buttonPullFromLeft.click(function(ev) {
-        activateAfterThrowButtons();
-    });
+            let $buttonPullFromLeft = $('button#pull-from-left');
+            let $buttonPullFromRight = $('button#pull-from-right');
+            let $buttonPull = $('button#pull');
 
-    $buttonPullFromRight.click(function(ev) {
-        activateAfterThrowButtons();
-    });
-    $buttonPull.click(function(ev) {
-        activateAfterThrowButtons();
-    });
+            console.log("button#pull-from-left");
+            console.log($buttonPullFromLeft);
+            $buttonPullFromLeft.click(function (ev) {
+                activateAfterThrowButtons();
+            });
 
-    console.log("inside zepto");
+            $buttonPullFromRight.click(function (ev) {
+                activateAfterThrowButtons();
+            });
+            $buttonPull.click(function (ev) {
+                activateAfterThrowButtons();
+            });
 
-    deactivateAllButtons();
-    //activateBeforePullButtons();
+            console.log("inside zepto");
 
-    var $field = $('div#field');
-    var $left = $('div#left-ez');
-    var $right = $('div#right-ez');
-    var $grass = $('div.grass');
+            deactivateAllButtons();
+            //activateBeforePullButtons();
 
-    console.log("Grass elements:");
-    console.log($grass);
+            var $field = $('div#field');
+            var $left = $('div#left-ez');
+            var $right = $('div#right-ez');
+            var $grass = $('div.grass');
 
-    $grass.on('click',
-        function(ev) {
-            var offset = $(this).offset();
-            var width = offset.width;
-            var height = offset.height;
-            var x = offset.left;
-            var y = offset.top;
+            console.log("Grass elements:");
+            console.log($grass);
 
-            console.log(offset);
-            console.log("WxH: " + width + "x" + height);
+            $grass.on('click',
+                      function (ev) {
+                          var offset = $(this).offset();
+                          var width = offset.width;
+                          var height = offset.height;
+                          var x = offset.left;
+                          var y = offset.top;
 
-            var id = ev.target.id;
-            console.log(id + " - click @ (" + x + ", " + y + ")");
+                          console.log(offset);
+                          console.log("WxH: " + width + "x" + height);
+
+                          var id = ev.target.id;
+                          console.log(id + " - click @ (" + x + ", " + y + ")");
+                      });
+
+            $field.on('click',
+                      function (ev) {
+                          var offset = $(this).offset();
+                          var width = offset.width;
+                          var height = offset.height;
+                          var x = offset.left;
+                          var y = offset.top;
+
+                          console.log(offset);
+                          console.log("WxH: " + width + "x" + height);
+
+                          console.log("FIELD click @ (" + x + ", " + y + ")");
+                          var obj = ev.target.id;
+                          console.log("        id: " + obj);
+                      });
         });
 
-    $field.on('click',
-        function(ev) {
-            var offset = $(this).offset();
-            var width = offset.width;
-            var height = offset.height;
-            var x = offset.left;
-            var y = offset.top;
-
-            console.log(offset);
-            console.log("WxH: " + width + "x" + height);
-
-            console.log("FIELD click @ (" + x + ", " + y + ")");
-            var obj = ev.target.id;
-            console.log("        id: " + obj);
-        });
-    });
-
-</script>
+    </script>
 </head>
 
 <body>
@@ -125,7 +126,7 @@ $(function() {
     <h2 id="team-1-name-field">(team 1) / 0 - 0 / (team 2)</h2>
 </div>
 
-<div id ="field-box">
+<div id="field-box">
     <div id="field">
         <div id="proper" class="proper grass"></div>
         <div id="left-ez" class="ez grass"></div>
