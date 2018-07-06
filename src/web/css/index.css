@@ -1,0 +1,120 @@
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+    -moz-box-sizing    : border-box;
+    -webkit-box-sizing : border-box;
+    box-sizing         : border-box;
+    }
+
+body {
+    font-family      : "Helvetica Neue Light", "helveticaneue-light", "helveticaneue", "helvetica", "arial", sans-serif;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #ccc;
+}
+
+div#game-info {
+    margin: 2em 0 1em 0;
+}
+
+div#game-name {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+h1 {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+h2 {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
+
+div#field-box h1 {
+    display: block;
+}
+
+div#field-box {
+    width: 810px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+    border: 2px solid white;
+    position: relative;
+    /*
+    padding-left: 18%;
+    padding-right: 18%;
+    */
+    z-index: 0;
+}
+
+div.grass {
+    background-color: #007f00;
+}
+
+div.ez {
+    position: absolute;
+    top: 0;
+    width: 145px;
+    height: 100%;
+    z-index: 200;
+}
+
+div#left-ez {
+    left: 0;
+}
+
+div#right-ez {
+    right: 0;
+}
+
+div#proper {
+    height: 100%;
+    /*
+    background-color: red;
+    border: 8px solid yellow;
+    */
+    z-index: 300;
+    margin: 0 145px;
+    border-right: 4px solid white;
+    border-left: 4px solid white;
+}
+
+div.grass:hover {
+    background-color: #003f00;
+}
+
+div.button-bar {
+    text-align: center;
+}
+
+div#button-bar {
+    padding: 0;
+    margin: 1em auto 0 auto;
+}
+
+button.button {
+    border: none;
+    background-color: gray;
+    color: white;
+    padding: 0.5em 1em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+}
+
+button.button:hover {
+    cursor: pointer;
+}
