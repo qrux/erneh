@@ -92,6 +92,8 @@ header("Pragma: no-cache");
 
                 console.log(gameInfo);
 
+                $inputTeam2Field.blur();
+
                 call('get-game-id',
                      gameInfo,
                      function (data) {
@@ -142,8 +144,10 @@ header("Pragma: no-cache");
                     .attr("disabled", "disabled")
                     .css("background-color", "#222")
                 ;
-                //var $gameRound = $inputRoundGameField.val();
-                //$inputRoundGameField.val($gameRound)
+                //$inputRoundGameField.css('visibility', 'hidden');
+                //$inputGameDateField.css('visibility', 'hidden');
+                var $gameRound = $inputRoundGameField.val();
+                $inputRoundGameField.val("G/R: " + $gameRound)
             }
 
             let $buttonPullFromLeft = $('button#pull-from-left');
@@ -225,10 +229,12 @@ header("Pragma: no-cache");
 
 <form id="form-game-info" action="">
     <div id="game-info">
-        <input id="input-game-field" class="game-info" type="text"/>
-        <br/>
-        <input id="input-round-game-field" class="game-info round-game" type="text"/>
-        <input id="input-game-date-field" class="game-info round-game" type="text"/>
+        <fieldset id="game-meta">
+            <input id="input-game-field" class="game-info" type="text"/>
+            <br/>
+            <input id="input-round-game-field" class="game-info round-game" type="text"/>
+            <input id="input-game-date-field" class="game-info round-game" type="text"/>
+        </fieldset>
         <br/>
         <br/>
         <input id="input-team-1-name-field" class="game-info team-name" type="text"/>
