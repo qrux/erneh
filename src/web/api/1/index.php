@@ -59,8 +59,38 @@ class AjaxCalls
     {
         $gameInfo = $ajax->testAbortBoth('game-info');
 
-        $json = FJ::json_encode($gameInfo);
-        $id = md5($json);
+        $event = $gameInfo['event'];
+        $round = $gameInfo['game'];
+        $date = $gameInfo['date'];
+        $teams = $gameInfo['teams'];
+
+        $team1 = $teams[0];
+        $team2 = $teams[1];
+
+        $name1 = $team1['name'];
+        $name2 = $team2['name'];
+
+        $date = strtotime($date);
+        $input = "$date,$event,$round,$name1,$name2";
+
+        $in2 = preg_replace("/\s/", "_", $input);
+
+        $id = md5($in2);
+
+        clog("date", $date);
+        clog("input-string", $input);
+        clog("input-string-replaced", $in2);
+        clog("game-id", $id);
+
+        /*
+         * Should persist the games here.
+         * What needs to be persisted...?
+         *
+         * Games and teams are probably the high level objects.
+         * Games should be organized by event.
+         * timestamp-event-round-team1-team2-team1score-team2score
+         *
+         */
 
         $ajax->win("Added");
         $ajax->set("id", $id);
@@ -83,14 +113,12 @@ $shouldBeSecureButIsnt = $isProd && $isntSecure;
  * Comment out the following should-be-secure-but-isn't block
  * to disable HTTPS check (maybe b/c Android clients are being retarded).
  */
-/*
 if ($shouldBeSecureButIsnt)
 {
     clog("API", "Dropping request because not HTTPS . ");
     echo "Hey--you shouldn't be here naked!<br/>\n";
     exit();
 }
-*/
 
 $isOkay = $ajax->testBoth("method");
 if (false === $isOkay)
