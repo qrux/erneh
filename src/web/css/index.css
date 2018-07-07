@@ -3,118 +3,222 @@
     -moz-box-sizing    : border-box;
     -webkit-box-sizing : border-box;
     box-sizing         : border-box;
-    }
+}
 
 body {
     font-family      : "Helvetica Neue Light", "helveticaneue-light", "helveticaneue", "helvetica", "arial", sans-serif;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: #ccc;
+    width            : 100%;
+    height           : 100%;
+    padding          : 0;
+    margin           : 0;
+    /*
+    background       : url("../res/grass-sm.jpg");
+    */
+    background-color : #222;
+    color            : #777;
 }
 
 div#game-info {
-    margin: 2em 0 1em 0;
+    margin     : 2em 0 0.5em 0;
+    text-align : center;
+    font-size  : 20px;
+}
+
+input {
+    border-bottom: 1px solid #555;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+
+    background-color : #222;
+    color            : #555;
+    padding          : 0.25em 0.5em;
+    text-align       : center;
+    font-size        : 18px;
+}
+
+input:disabled {
+    color            : white;
+    background-color : #222;
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
+}
+
+input.submit {
+    color : red;
+    border: 0;
+}
+
+input.team-name {
+    font-size : 32px;
+    width: 10em;
+}
+
+input.round-game {
+    font-size : 24px;
+    width     : 8em;
+}
+
+input#input-team-1-name-field {
+    text-align : right;
+}
+
+input#input-team-2-name-field {
+    text-align : left;
+}
+
+::placeholder {
+    color : #555;
+}
+
+span.score {
+    font-style     : italic;
+    font-size      : 36px;
+    color          : white;
+    vertical-align : baseline;
+    width          : 1.5em;
+    display        : inline-block;
+}
+
+span.score.team-1 {
+    text-align : right;
+}
+
+span.score.team-2 {
+    text-align : left;
+}
+
+div#game-info input {
+    margin-top : 0.25em;
+}
+
+input#input-game-field {
+    font-size     : 36px;
+    width         : 20em;
+    margin-bottom : 0.5em;
 }
 
 div#game-name {
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
-    width: 100%;
+    position   : relative;
+    text-align : center;
+    margin     : 0 auto;
+    width      : 100%;
 }
 
 h1 {
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
-    width: 100%;
+    position   : relative;
+    text-align : center;
+    margin     : 0 auto;
+    width      : 100%;
 }
 
 h2 {
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
-    width: 100%;
+    position   : relative;
+    text-align : center;
+    margin     : 0 auto;
+    width      : 100%;
 }
 
 div#field-box h1 {
-    display: block;
+    display : block;
 }
 
 div#field-box {
-    width: 810px;
-    height: 300px;
-    margin: 0 auto;
-    position: relative;
-    border: 2px solid white;
-    position: relative;
+    width      : 810px;
+    height     : 300px;
+    margin     : 0 auto;
+    position   : relative;
+    border     : 2px solid white;
+    position   : relative;
     /*
     padding-left: 18%;
     padding-right: 18%;
     */
-    z-index: 0;
+    z-index    : 0;
+    text-align : center;
+}
+
+input#submit-game-info {
+    position    : absolute;
+    top         : 1em;
+    left        : 0;
+    z-index     : 500;
+    width       : 100%;
+    text-align  : center;
+    background  : none;
+    color       : #ccc;
+    font-size   : 48px;
+    font-weight : 100;
+    font-style  : italic;
 }
 
 div.grass {
-    background-color: #007f00;
+    /*
+    background : url("../res/grass-sm.jpg");
+    */
+    background-color : #080;
 }
 
 div.ez {
-    position: absolute;
-    top: 0;
-    width: 145px;
-    height: 100%;
-    z-index: 200;
+    position : absolute;
+    top      : 0;
+    width    : 145px;
+    height   : 100%;
+    z-index  : 200;
 }
 
 div#left-ez {
-    left: 0;
+    left : 0;
 }
 
 div#right-ez {
-    right: 0;
+    right : 0;
 }
 
 div#proper {
-    height: 100%;
+    height       : 100%;
     /*
     background-color: red;
     border: 8px solid yellow;
     */
-    z-index: 300;
-    margin: 0 145px;
-    border-right: 4px solid white;
-    border-left: 4px solid white;
+    z-index      : 300;
+    margin       : 0 145px;
+    border-right : 4px solid white;
+    border-left  : 4px solid white;
 }
 
 div.grass:hover {
-    background-color: #003f00;
+    background-color : #003f00;
 }
 
 div.button-bar {
-    text-align: center;
+    text-align : center;
 }
 
 div#button-bar {
-    padding: 0;
-    margin: 1em auto 0 auto;
+    padding : 0;
+    margin  : 1em auto 0 auto;
 }
 
 button.button {
-    border: none;
-    background-color: gray;
-    color: white;
-    padding: 0.5em 1em;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    border-radius: 8px;
+    border           : none;
+    background-color : gray;
+    color            : white;
+    padding          : 0.5em 1em;
+    text-align       : center;
+    text-decoration  : none;
+    display          : inline-block;
+    font-size        : 16px;
+    margin           : 4px 2px;
+    border-radius    : 8px;
 }
 
 button.button:hover {
-    cursor: pointer;
+    cursor : pointer;
+}
+
+.new-score {
+    visibility: hidden;
+}
+input.new-score {
+    width: 3em;
 }
