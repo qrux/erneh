@@ -14,7 +14,7 @@ body {
     /*
     background       : url("../res/grass-sm.jpg");
     */
-    background-color : #222;
+    background-color : #30292F;
     color            : #777;
 }
 
@@ -31,7 +31,7 @@ fieldset#game-meta {
     /*
     border: 2px solid #ccc;
     */
-    background-color: #272727;
+    background-color: #30292F;
     border: 0;
 }
 
@@ -41,7 +41,7 @@ input {
     border-left: 0;
     border-right: 0;
 
-    background-color : #222;
+    background-color : #30292F;
     color            : #555;
     padding          : 0.25em 0.5em;
     text-align       : center;
@@ -50,7 +50,7 @@ input {
 
 input:disabled {
     color            : white;
-    background-color : #222;
+    background-color : #413F54;
     border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
@@ -222,6 +222,7 @@ div.button-group button,
 button.button {
     border           : none;
     background-color : gray;
+    /* background-image: linear-gradient( to bottom, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) ); */
     color            : white;
     padding          : 0.5em 1em;
     text-align       : center;
@@ -235,7 +236,15 @@ button.button {
 
 button.button:hover {
     cursor : pointer;
+    background-color: #8CF;
+    color: #222;
 }
+
+.button.is-checked {
+  /* background-color: #8c5383; */
+  background-color: #5F5AA2;
+}
+
 
 .new-score {
     visibility: hidden;
@@ -258,7 +267,7 @@ div#roster-t1 {
     left: 0;
     width: 50%;
     top: 0;
-    text-align: left;
+    text-align: center;
 }
 
 div#roster-t2 {
@@ -266,11 +275,10 @@ div#roster-t2 {
     right: 0;
     width: 49%;
     top: 0;
-    text-align: right;
+    text-align: center;
 }
 
 div#team-rosters form {
-    background-color: #222;
 }
 
 div#team-rosters fieldset {
@@ -376,6 +384,8 @@ div#roster-t2 .element-item.f {
 
 .grid {
   min-height: 200px;
+  margin: 0 auto;
+  margin-left: 3.25em;
 }
 
 /*
@@ -401,8 +411,4 @@ div#field-box-outer:after {
   content: '';
   display: block;
   clear: both;
-}
-
-div.button-group button {
-
 }
