@@ -43,9 +43,36 @@ $(function () {
             }
         });
 
-    function createPlayerHTML(team, number, name, symbol) {
+    function generateRandomBool() {
+        return Math.random() >= 0.5;
+
+        var a = new Uint8Array(1);
+        return function () {
+            crypto.getRandomValues(a);
+            return a[0] > 127;
+        };
+    }
+
+    function generateRandomPlayer(team, number) {
+        var player = {};
+        var isMan = generateRandomBool();
+        if (1 == team) {
+            player.name = isMan ? "John Doe" : "Jane Doe";
+            player.symbol = "jD";
+        } else {
+            player.name = isMan ? "Jack Hill" : "Jill Hill";
+            player.symbol = "jH";
+        }
+        player.gender = isMan ? 'm' : 'f';
+
+        var html = createPlayerHTML(team, number, player.name, player.gender, player.symbol);
+
+        return html;
+    }
+
+    function createPlayerHTML(team, number, name, gender, symbol) {
         var id = "player-t" + team + "-" + number;
-        var html = '<div id="' + id + '" class="element-item" data-category="team-' + team + '">';
+        var html = '<div id="' + id + '" class="element-item ' + gender + '" data-category="team-' + team + '">';
         html += '<h3 class="name">' + name + "</h3>";
         html += '<p class="symbol">' + symbol + "</p>";
         html += '<p class="number">' + number + "</p>";
@@ -67,20 +94,24 @@ $(function () {
     if (ER.IS_DEMO) {
         var team = 1;
         for (var i = 0; i < 14; ++i) {
-            var player = createPlayerHTML(team, i, "Sale Mara", "Sm");
+            var player = generateRandomPlayer(team, i);
             $('div#roster-t' + team + ' .grid')
                 .append(player);
+            /*
             var $player = $('div#player-t' + team + '-' + i);
             $player.css('background-color', getRandomColor());
+            */
         }
 
         team = 2;
         for (var i = 20; i < 34; ++i) {
-            var player = createPlayerHTML(team, i, "Homer Simpson", "Hs");
+            var player = generateRandomPlayer(team, i);
             $('div#roster-t' + team + ' .grid')
                 .append(player);
+            /*
             var $player = $('div#player-t' + team + '-' + i);
             $player.css('background-color', getRandomColor());
+            */
         }
     }
 

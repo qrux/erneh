@@ -72,20 +72,36 @@ header("Pragma: no-cache");
             <input id="new-score-team-2" class="game new-score" />
             <span class="new-score">New Team 2 Score</span>
         </div>
+        <!--
         <div id="button-bar-4" class="button-bar edit-roster">
             <button id="edit-team1-roster" class="button game edit-roster">Edit Team 1 Roster</button>
             <button id="edit-team2-roster" class="button game edit-roster">Edit Team 2 Roster</button>
         </div>
-        <!--
         <div id="button-bar-9" class="button-bar edit-roster">
             <button id="test-info" class="button">Insert Demo Info</button>
         </div>
         -->
         <div id="team-rosters">
             <div id="roster-t1">
+                <form id="team1-add-player-form" action="">
+                    <fieldset id="fs-t1">
+                        <label>Add Team 1 Player</label>
+                        <input id="team1-add-player-field" class="game-info" type="text"/>
+                        <br/>
+                        <label class="l-indent">name, number, gender, symbol</label>
+                    </fieldset>
+                </form>
                 <div class="grid team-roster"></div>
             </div>
             <div id="roster-t2">
+                <form id="t2-add-player-form" action="">
+                    <fieldset id="fs-t2">
+                        <input id="t2-add-player-field" class="game-info" type="text"/>
+                        <label>Add Team 2 Player</label>
+                        <br/>
+                        <label class="r-indent">name, number, gender, symbol</label>
+                    </fieldset>
+                </form>
                 <div class="grid team-roster"></div>
             </div>
         </div>
