@@ -310,6 +310,7 @@ label.r-indent {
   padding: 0;
 }
 
+/*
 div#roster-t1 .element-item.m {
     background-color: #345;
 }
@@ -324,6 +325,15 @@ div#roster-t2 .element-item.m {
 
 div#roster-t2 .element-item.f {
     background-color: #544;
+}
+*/
+
+.element-item.f {
+    background-color: #92374D;
+}
+
+.element-item.m {
+    background-color: #33658A;
 }
 
 .element-item .name {
