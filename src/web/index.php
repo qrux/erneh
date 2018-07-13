@@ -98,16 +98,16 @@ header("Pragma: no-cache");
                 </fieldset>
             </form>
             <div class="button-group filters-button-group">
-                <button class="button1 is-checked" data-filter="*">Show All</button>
-                <button class="button1" data-filter=".f">Women</button>
-                <button class="button1" data-filter=".m">Men</button>
+                <button class="button button1 is-checked" data-filter="*">All</button>
+                <button class="button button1" data-filter=".f">Women</button>
+                <button class="button button1" data-filter=".m">Men</button>
             </div>
             <div class="button-group sort-by-button-group">
-              <button class="button1 is-checked" data-sort-value="original-order">Default</button>
-              <button class="button1" data-sort-value="name">Name</button>
-              <button class="button1" data-sort-value="symbol">Symbol</button>
-              <button class="button1" data-sort-value="number">#</button>
-              <button class="button1" data-sort-value="category">Gender</button>
+              <button class="button button1 is-checked" data-sort-value="gender, number">Default</button>
+              <button class="button button1" data-sort-value="name">Name</button>
+              <button class="button button1" data-sort-value="symbol">Symbol</button>
+              <button class="button button1" data-sort-value="number">#</button>
+              <button class="button button1" data-sort-value="gender">Gender</button>
             </div>
             <div class="grid team-roster"></div>
         </div>
@@ -122,16 +122,16 @@ header("Pragma: no-cache");
                 </fieldset>
             </form>
             <div class="button-group filters-button-group">
-                <button class="button2 is-checked" data-filter="*">Show All</button>
-                <button class="button2" data-filter=".f">Women</button>
-                <button class="button2" data-filter=".m">Men</button>
+                <button class="button button2 is-checked" data-filter="*">All</button>
+                <button class="button button2" data-filter=".f">Women</button>
+                <button class="button button2" data-filter=".m">Men</button>
             </div>
             <div class="button-group sort-by-button-group">
-              <button class="button2 is-checked" data-sort-value="original-order">Default</button>
-              <button class="button2" data-sort-value="name">Name</button>
-              <button class="button2" data-sort-value="symbol">Symbol</button>
-              <button class="button2" data-sort-value="number">#</button>
-              <button class="button2" data-sort-value="category">Gender</button>
+              <button class="button button2 is-checked" data-sort-value="gender, number">Default</button>
+              <button class="button button2" data-sort-value="name">Name</button>
+              <button class="button button2" data-sort-value="symbol">Symbol</button>
+              <button class="button button2" data-sort-value="number">#</button>
+              <button class="button button2" data-sort-value="gender">Gender</button>
             </div>
             <div class="grid team-roster"></div>
         </div>

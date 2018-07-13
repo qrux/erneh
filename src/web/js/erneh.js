@@ -36,14 +36,9 @@ $(function () {
                 name: '.name',
                 symbol: '.symbol',
                 number: '.number parseInt',
-                category: '[class]',
-                weight: function (itemElem) {
-                    var weight = $(itemElem)
-                        .find('.weight')
-                        .text();
-                    return parseFloat(weight.replace(/[\(\)]/g, ''));
-                }
-            }
+                gender: '[class]'
+            },
+            sortBy: ['gender', 'number']
         });
 
 
@@ -117,6 +112,23 @@ $(function () {
             $grid2.append($player)
                 .isotope('appended', $player);
         }
+    }
+
+    function addTeam(team, players) {
+        $.each(players, function (idx, obj) {
+            var number = idx;
+            var player = obj;
+
+            //cl("#" + number + ": ", player);
+
+            addPlayer(
+                team,
+                player.name,
+                player.number,
+                player.gender,
+                player.symbol
+            );
+        });
     }
 
     function getRandomColor() {
@@ -198,6 +210,8 @@ $(function () {
         .on('click', 'button.button1', function () {
             var sortValue = $(this)
                 .attr('data-sort-value');
+            // make an array of values
+            sortValue = sortValue.split(',');
             $grid1.isotope({
                 sortBy: sortValue
             });
@@ -207,27 +221,39 @@ $(function () {
         .on('click', 'button.button2', function () {
             var sortValue = $(this)
                 .attr('data-sort-value');
+            // make an array of values
+            sortValue = sortValue.split(',');
             $grid2.isotope({
                 sortBy: sortValue
             });
         });
 
-
+    // change is-checked class on buttons
+    $('.button-group')
+        .each(function (i, buttonGroup) {
+            var $buttonGroup = $(buttonGroup);
+            $buttonGroup.on('click', 'button', function () {
+                $buttonGroup.find('.is-checked')
+                    .removeClass('is-checked');
+                $(this)
+                    .addClass('is-checked');
+            });
+        });
+    // change is-checked class on buttons
+    /*
+    $('.button-group')
+        .each(function (i, buttonGroup) {
+            var $buttonGroup = $(buttonGroup);
+            $buttonGroup.on('click', 'button.button2', function () {
+                $buttonGroup.find('.is-checked')
+                    .removeClass('is-checked');
+                $(this)
+                    .addClass('is-checked');
+            });
+        });
+        */
 
     if (ER.IS_DEMO) {
-        /*
-        for (var t = 0; t < 2; ++t) {
-            var team = t + 1;
-            var $grid = $('div#roster-t' + team + ' .grid');
-
-            for (var i = 0; i < 14; ++i) {
-                var number = t * 20 + i;
-
-                var player = generateRandomPlayer(team, number);
-                $grid.append(player);
-            }
-        }
-        */
         for (var t = 1; t < 2; ++t) {
             var team = t + 1;
             var $grid = $('div#roster-t' + team + ' .grid');
@@ -240,24 +266,25 @@ $(function () {
             }
         }
 
-        function addTeam(team, players) {
-            $.each(players, function (idx, obj) {
-                var number = idx;
-                var player = obj;
-
-                //cl("#" + number + ": ", player);
-
-                addPlayer(
-                    team,
-                    player.name,
-                    player.number,
-                    player.gender,
-                    player.symbol
-                );
-            });
-        }
-
         addTeam(1, meridian);
+
+        $('.grid')
+            .isotope({
+                // options...
+                itemSelector: '.element-item',
+                cellsByRow: {
+                    columnWidth: 150,
+                    rowHeight: 150
+                },
+                layoutMode: 'fitRows',
+                getSortData: {
+                    name: '.name',
+                    symbol: '.symbol',
+                    number: '.number parseInt',
+                    gender: '[class]'
+                },
+                sortBy: ['gender', 'number']
+            });
     }
 
     var $buttons = $('button.button.game');
@@ -422,7 +449,7 @@ $(function () {
     function disableGameInfoFields() {
         $gameInfoFields
             .attr("disabled", "disabled")
-            .css("background-color", "#222");
+            .css("background-color", "#30292F");
         //$inputRoundGameField.css('visibility', 'hidden');
         //$inputGameDateField.css('visibility', 'hidden');
         var $gameRound = $inputRoundGameField.val();
