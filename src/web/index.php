@@ -16,6 +16,7 @@ header("Pragma: no-cache");
     <script type="text/javascript" src="js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="js/lib/isotope.pkgd.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/erneh-data.js"></script>
     <script type="text/javascript" src="js/erneh.js"></script>
 
 </head>
@@ -46,11 +47,13 @@ header("Pragma: no-cache");
         </form>
     </div>
 
-    <div id="field-box">
-        <div id="field">
-            <div id="proper" class="proper grass"></div>
-            <div id="left-ez" class="ez grass"></div>
-            <div id="right-ez" class="ez grass"></div>
+    <div id="field-box-outer">
+        <div id="field-box">
+            <div id="field">
+                <div id="proper" class="proper grass"></div>
+                <div id="left-ez" class="ez grass"></div>
+                <div id="right-ez" class="ez grass"></div>
+            </div>
         </div>
 
         <div id="button-bar" class="button-bar">
@@ -81,29 +84,42 @@ header("Pragma: no-cache");
             <button id="test-info" class="button">Insert Demo Info</button>
         </div>
         -->
-        <div id="team-rosters">
-            <div id="roster-t1">
-                <form id="team1-add-player-form" action="">
-                    <fieldset id="fs-t1">
-                        <label>Add Team 1 Player</label>
-                        <input id="team1-add-player-field" class="game-info" type="text"/>
-                        <br/>
-                        <label class="l-indent">name, number, gender, symbol</label>
-                    </fieldset>
-                </form>
-                <div class="grid team-roster"></div>
+    </div>
+
+    <div id="team-rosters">
+        <div id="roster-t1">
+            <form id="t1-add-player-form">
+                <fieldset id="fs-t1">
+                    <label>Add Team 1 Player</label>
+                    <input id="t1-add-player-field" class="game-info" type="text"/>
+                    <button class="button" type="submit">+</button>
+                    <br/>
+                    <label class="l-indent">name, number, gender, symbol</label>
+                </fieldset>
+            </form>
+            <div class="button-group filters-button-group">
+                <button class="button1 is-checked" data-filter="*">Show All</button>
+                <button class="button1" data-filter=".f">Women</button>
+                <button class="button1" data-filter=".m">Men</button>
             </div>
-            <div id="roster-t2">
-                <form id="t2-add-player-form" action="">
-                    <fieldset id="fs-t2">
-                        <input id="t2-add-player-field" class="game-info" type="text"/>
-                        <label>Add Team 2 Player</label>
-                        <br/>
-                        <label class="r-indent">name, number, gender, symbol</label>
-                    </fieldset>
-                </form>
-                <div class="grid team-roster"></div>
+            <div class="grid team-roster"></div>
+        </div>
+        <div id="roster-t2">
+            <form id="t2-add-player-form">
+                <fieldset id="fs-t2">
+                    <button class="button" type="submit">+</button>
+                    <input id="t2-add-player-field" class="game-info" type="text"/>
+                    <label>Add Team 2 Player</label>
+                    <br/>
+                    <label class="r-indent">name, number, gender, symbol</label>
+                </fieldset>
+            </form>
+            <div class="button-group filters-button-group">
+                <button class="button2 is-checked" data-filter="*">Show All</button>
+                <button class="button2" data-filter=".f">Women</button>
+                <button class="button2" data-filter=".m">Men</button>
             </div>
+            <div class="grid team-roster"></div>
         </div>
     </div>
 
