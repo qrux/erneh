@@ -134,8 +134,8 @@ div#field-box h1 {
 }
 
 div#field-box {
-    width      : 810px;
-    height     : 300px;
+    width      : 1000px;
+    height     : 370px;
     margin     : 0 auto;
     position   : relative;
     border     : 2px solid white;
@@ -148,18 +148,26 @@ div#field-box {
     text-align : center;
 }
 
+span#scoring-gap {
+    display: inline;
+}
+
 input#submit-game-info {
-    position    : absolute;
     top         : 1em;
     left        : 0;
     z-index     : 500;
-    width       : 100%;
     text-align  : center;
-    background  : none;
+    background-color: #070;
     color       : #ccc;
-    font-size   : 48px;
+    font-size   : 28px;
     font-weight : 100;
     font-style  : italic;
+    border: 2px solid white;
+    border-radius: 8px;
+}
+
+input#submit-game-info:hover {
+    background-color: #040;
 }
 
 div.grass {
@@ -172,7 +180,7 @@ div.grass {
 div.ez {
     position : absolute;
     top      : 0;
-    width    : 145px;
+    width    : 180px;
     height   : 100%;
     z-index  : 200;
 }
@@ -192,13 +200,13 @@ div#proper {
     border: 8px solid yellow;
     */
     z-index      : 300;
-    margin       : 0 145px;
+    margin       : 0 180px;
     border-right : 4px solid white;
     border-left  : 4px solid white;
 }
 
 div.grass:hover {
-    background-color : #003f00;
+    background-color : #040;
 }
 
 div.button-bar {
@@ -232,4 +240,92 @@ button.button:hover {
 }
 input.new-score {
     width: 3em;
+}
+
+.turn-on {
+    background-color: #777;
+    color: white;
+}
+
+div#team-rosters {
+    width: 100%;
+    margin-bottom: 100px;
+}
+
+div#roster-t1 {
+    display: inline-block;
+    left: 0;
+    width: 50%;
+    top: 0;
+}
+
+div#roster-t2 {
+    display: inline-block;
+    right: 0;
+    width: 49%;
+    top: 0;
+}
+
+.element-item {
+  position: relative;
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  padding: 10px;
+  background: #888;
+  color: #262524;
+}
+
+.element-item > * {
+  margin: 0;
+  padding: 0;
+}
+
+.element-item .name {
+  position: absolute;
+
+  left: 10px;
+  top: 60px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.element-item .symbol {
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  font-size: 42px;
+  font-weight: bold;
+  color: white;
+}
+
+.element-item .number {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+}
+
+.element-item .weight {
+  position: absolute;
+  left: 10px;
+  top: 76px;
+  font-size: 12px;
+}
+
+.grid {
+  min-height: 200px;
+}
+
+
+.grid-item { width: 25%; }
+.grid-item--width2 { width: 50%; }
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
 }
