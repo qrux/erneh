@@ -5,8 +5,6 @@ function call(method, postHash, onSuccess, onFail, onComplete) {
     api("1/index", data, onSuccess, onFail, onComplete);
 }
 
-console.log("here!");
-
 var ER = {};
 
 ER.IS_DEMO = true;
@@ -22,26 +20,26 @@ function cl(mesg, obj) {
     console.log(obj);
 }
 
-/*
-    <div class="element-item metalloid " data-category="metalloid">
-      <h3 class="name">Tellurium</h3>
-      <p class="symbol">Te</p>
-      <p class="number">52</p>
-      <p class="weight">127.6</p>
-    </div>
-    */
-
 $(function () {
     cl("ER.state", ER);
 
     $('.grid')
         .isotope({
             // options...
-            itemSelector: '.grid-item',
-            masonry: {
-                columnWidth: 200
-            }
+            itemSelector: '.element-item',
+            cellsByRow: {
+                columnWidth: 150,
+                rowHeight: 150
+            },
+            layoutMode: 'fitRows'
         });
+
+
+    var $grid1 = $('div#roster-t' + 1 + ' .grid');
+    var $grid2 = $('div#roster-t' + 2 + ' .grid');
+
+    cl("grid1", $grid1);
+    cl("grid2", $grid2);
 
     function generateRandomBool() {
         return Math.random() >= 0.5;
@@ -53,9 +51,19 @@ $(function () {
         };
     }
 
+    function generateWeightedBool(weight) {
+        return Math.random() < weight;
+
+        var a = new Uint8Array(1);
+        return function () {
+            crypto.getRandomValues(a);
+            return a[0] > 127;
+        };
+    }
+
     function generateRandomPlayer(team, number) {
         var player = {};
-        var isMan = generateRandomBool();
+        var isMan = generateWeightedBool(0.7);
         if (1 == team) {
             player.name = isMan ? "John Doe" : "Jane Doe";
             player.symbol = "jD";
@@ -65,21 +73,38 @@ $(function () {
         }
         player.gender = isMan ? 'm' : 'f';
 
-        var html = createPlayerHTML(team, number, player.name, player.gender, player.symbol);
+        var html = addPlayer(team, player.name, number, player.gender, player.symbol);
 
         return html;
     }
 
-    function createPlayerHTML(team, number, name, gender, symbol) {
+    function createPlayerHTML(team, name, number, gender, symbol) {
         var id = "player-t" + team + "-" + number;
         var html = '<div id="' + id + '" class="element-item ' + gender + '" data-category="team-' + team + '">';
         html += '<h3 class="name">' + name + "</h3>";
         html += '<p class="symbol">' + symbol + "</p>";
         html += '<p class="number">' + number + "</p>";
 
-        cl("player html", html);
+        //cl("player html", html);
 
         return html;
+    }
+
+    function createPlayerNode(team, name, number, gender, symbol) {
+        return $(createPlayerHTML(team, name, number, gender, symbol));
+    }
+
+    function addPlayer(team, name, number, gender, symbol) {
+        gender = gender.toLowerCase();
+
+        var $player = createPlayerNode(team, name, number, gender, symbol);
+        if (1 == team) {
+            $grid1.append($player)
+                .isotope('appended', $player);
+        } else {
+            $grid2.append($player)
+                .isotope('appended', $player);
+        }
     }
 
     function getRandomColor() {
@@ -91,28 +116,115 @@ $(function () {
         return color;
     }
 
+    // filter functions
+    var filterFns = {
+        // show if number is greater than 50
+        m: function () {
+            var number = $(this)
+                .find('.m')
+                .text();
+            return parseInt(number, 10) > 50;
+        },
+        // show if name ends with -ium
+        f: function () {
+            var number = $(this)
+                .find('.f')
+                .text();
+            return parseInt(number, 10) > 50;
+        },
+        /*
+        // show if name ends with -ium
+        ium: function () {
+            var name = $(this)
+                .find('.name')
+                .text();
+            return name.match(/ium$/);
+        }
+        */
+    };
+
+    // bind filter button click
+    $('.filters-button-group')
+        .on('click', 'button.button1', function () {
+            console.log("CLICKED!");
+
+            var filterValue = $(this)
+                .attr('data-filter');
+
+            console.log("filter-value: " + filterValue);
+
+            // use filterFn if matches value
+            filterValue = filterFns[filterValue] || filterValue;
+
+            console.log(filterValue);
+
+            $grid1.isotope({
+                filter: filterValue
+            });
+        });
+    $('.filters-button-group')
+        .on('click', 'button.button2', function () {
+            console.log("CLICKED!");
+
+            var filterValue = $(this)
+                .attr('data-filter');
+
+            console.log("filter-value: " + filterValue);
+
+            // use filterFn if matches value
+            filterValue = filterFns[filterValue] || filterValue;
+
+            console.log(filterValue);
+
+            $grid2.isotope({
+                filter: filterValue
+            });
+        });
+
     if (ER.IS_DEMO) {
-        var team = 1;
-        for (var i = 0; i < 14; ++i) {
-            var player = generateRandomPlayer(team, i);
-            $('div#roster-t' + team + ' .grid')
-                .append(player);
-            /*
-            var $player = $('div#player-t' + team + '-' + i);
-            $player.css('background-color', getRandomColor());
-            */
+        /*
+        for (var t = 0; t < 2; ++t) {
+            var team = t + 1;
+            var $grid = $('div#roster-t' + team + ' .grid');
+
+            for (var i = 0; i < 14; ++i) {
+                var number = t * 20 + i;
+
+                var player = generateRandomPlayer(team, number);
+                $grid.append(player);
+            }
+        }
+        */
+        for (var t = 1; t < 2; ++t) {
+            var team = t + 1;
+            var $grid = $('div#roster-t' + team + ' .grid');
+
+            for (var i = 0; i < 14; ++i) {
+                var number = t * 20 + i;
+
+                var player = generateRandomPlayer(team, number);
+                $grid.append(player);
+            }
         }
 
-        team = 2;
-        for (var i = 20; i < 34; ++i) {
-            var player = generateRandomPlayer(team, i);
-            $('div#roster-t' + team + ' .grid')
-                .append(player);
-            /*
-            var $player = $('div#player-t' + team + '-' + i);
-            $player.css('background-color', getRandomColor());
-            */
+        function addTeam(team, players) {
+            $.each(players, function (idx, obj) {
+                var number = idx;
+                var player = obj;
+
+                //cl("#" + number + ": ", player);
+
+                addPlayer(
+                    team,
+                    player.name,
+                    player.number,
+                    player.gender,
+                    player.symbol
+                );
+            });
         }
+
+        addTeam(1, meridian);
     }
 
     var $buttons = $('button.button.game');
@@ -136,6 +248,9 @@ $(function () {
     let $scoreboard = $('span#scoreboard');
 
     let $buttonDemo = $('button#test-info');
+
+    let $formAddTeam1 = $('form#t1-add-player-form');
+    let $formAddTeam2 = $('form#t2-add-player-form');
 
     $scoreboard.hide();
 
@@ -204,6 +319,36 @@ $(function () {
             function () {},
             function () {});
     });
+
+    $formAddTeam1.submit(function (ev) {
+        ev.preventDefault();
+        console.log("Adding player to Team 1");
+        var text = $formAddTeam1.find('input')
+            .val();
+        addPlayerToTeam(1, text);
+    });
+
+    $formAddTeam2.submit(function (ev) {
+        ev.preventDefault();
+        console.log("Adding player to Team 2");
+        var text = $formAddTeam2.find('input')
+            .val();
+        addPlayerToTeam(2, text);
+    });
+
+    function addPlayerToTeam(team, text) {
+        console.log("Team " + team + ": " + text);
+        var strings = text.split(",");
+
+        var name = strings[0].trim();
+        var number = strings[1].trim();
+        var gender = strings[2].trim();
+        var symbol = strings[3].trim();
+
+        // createPlayerHTML(team, number, name, gender, symbol);
+
+        addPlayer(team, number, name, gender, symbol);
+    }
 
 
     function f() {
