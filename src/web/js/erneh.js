@@ -31,7 +31,19 @@ $(function () {
                 columnWidth: 150,
                 rowHeight: 150
             },
-            layoutMode: 'fitRows'
+            layoutMode: 'fitRows',
+            getSortData: {
+                name: '.name',
+                symbol: '.symbol',
+                number: '.number parseInt',
+                category: '[class]',
+                weight: function (itemElem) {
+                    var weight = $(itemElem)
+                        .find('.weight')
+                        .text();
+                    return parseFloat(weight.replace(/[\(\)]/g, ''));
+                }
+            }
         });
 
 
@@ -180,6 +192,27 @@ $(function () {
                 filter: filterValue
             });
         });
+
+    // bind sort button click
+    $('.sort-by-button-group')
+        .on('click', 'button.button1', function () {
+            var sortValue = $(this)
+                .attr('data-sort-value');
+            $grid1.isotope({
+                sortBy: sortValue
+            });
+        });
+    // bind sort button click
+    $('.sort-by-button-group')
+        .on('click', 'button.button2', function () {
+            var sortValue = $(this)
+                .attr('data-sort-value');
+            $grid2.isotope({
+                sortBy: sortValue
+            });
+        });
+
+
 
     if (ER.IS_DEMO) {
         /*

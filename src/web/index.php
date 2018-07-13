@@ -102,6 +102,13 @@ header("Pragma: no-cache");
                 <button class="button1" data-filter=".f">Women</button>
                 <button class="button1" data-filter=".m">Men</button>
             </div>
+            <div class="button-group sort-by-button-group">
+              <button class="button1 is-checked" data-sort-value="original-order">Default</button>
+              <button class="button1" data-sort-value="name">Name</button>
+              <button class="button1" data-sort-value="symbol">Symbol</button>
+              <button class="button1" data-sort-value="number">#</button>
+              <button class="button1" data-sort-value="category">Gender</button>
+            </div>
             <div class="grid team-roster"></div>
         </div>
         <div id="roster-t2">
@@ -118,6 +125,13 @@ header("Pragma: no-cache");
                 <button class="button2 is-checked" data-filter="*">Show All</button>
                 <button class="button2" data-filter=".f">Women</button>
                 <button class="button2" data-filter=".m">Men</button>
+            </div>
+            <div class="button-group sort-by-button-group">
+              <button class="button2 is-checked" data-sort-value="original-order">Default</button>
+              <button class="button2" data-sort-value="name">Name</button>
+              <button class="button2" data-sort-value="symbol">Symbol</button>
+              <button class="button2" data-sort-value="number">#</button>
+              <button class="button2" data-sort-value="category">Gender</button>
             </div>
             <div class="grid team-roster"></div>
         </div>
