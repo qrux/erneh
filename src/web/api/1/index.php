@@ -113,16 +113,14 @@ $shouldBeSecureButIsnt = $isProd && $isntSecure;
  * Comment out the following should-be-secure-but-isn't block
  * to disable HTTPS check (maybe b/c Android clients are being retarded).
  */
-if ($shouldBeSecureButIsnt)
-{
+if ($shouldBeSecureButIsnt) {
     clog("API", "Dropping request because not HTTPS . ");
     echo "Hey--you shouldn't be here naked!<br/>\n";
     exit();
 }
 
 $isOkay = $ajax->testBoth("method");
-if (false === $isOkay)
-{
+if (false === $isOkay) {
     clog("API", "Dropping request because no method.");
     echo "Hey--you shouldn't be here without knowing what you want!<br />\n";
     exit();
@@ -136,11 +134,9 @@ clog("-----=====[API - $method()] =====-----", $_POST);
 $callable = ["AjaxCalls", $method];
 $isCallable = is_callable($callable);
 
-if (!$isCallable)
-{
+if (!$isCallable) {
     $ajax->fail("Unknown API method($method); aborting.");
-} else
-{
+} else {
     $ajax = call_user_func($callable, $ajax);
 }
 
