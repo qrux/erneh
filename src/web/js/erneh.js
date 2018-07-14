@@ -90,30 +90,6 @@ $(function () {
     cl("button#pull-from-left", $buttonPullFromLeft);
     cl("button#jump-to-score", $buttonJumpToScore);
 
-
-    // ////////////////////////////////////////////////////////////////
-    //
-    // Isotope Grid + Event-handling
-    //
-    // ////////////////////////////////////////////////////////////////
-
-    /*
-    $('.grid')
-        .isotope({
-            // options...
-            itemSelector: '.element-item',
-            layoutMode: 'fitRows',
-            getSortData: {
-                name: '.name',
-                symbol: '.symbol',
-                number: '.number parseInt',
-                gender: '[class]'
-            },
-            sortBy: ['gender', 'number']
-        });
-        */
-
-
     // ////////////////////////////////////////////////////////////////
     //
     // Functions to add players.
@@ -215,64 +191,6 @@ $(function () {
 
     // ////////////////////////////////////////////////////////////////
     //
-    // Event-handling functions.
-    //
-    // ////////////////////////////////////////////////////////////////
-
-    function deactivateAllButtons() {
-        $buttons.prop('disabled', true);
-        $buttons.css('background-color', '#333');
-        $buttons.css('color', '#555');
-    }
-
-    function activateRosterButtons() {
-        $buttonsEditRoster.prop('disabled', false);
-        $buttonsEditRoster.addClass('turn-on');
-    }
-
-    function activateBeforePullButtons() {
-        deactivateAllButtons();
-        $buttonsBeforePull.prop('disabled', false);
-        $buttonsBeforePull.css('background-color', '#777');
-        $buttonsBeforePull.css('color', '#fff');
-    }
-
-    function activateAfterThrowButtons() {
-        /*
-        deactivateAllButtons();
-        $buttonsAfterThrow.prop('disabled', false);
-        $buttonsAfterThrow.css('background-color', '#777');
-        $buttonsAfterThrow.css('color', '#fff');
-        */
-    }
-
-    function activateJumpToScoreUI() {
-        $jumpToScoreUI.css('visibility', 'visible');
-    }
-
-    function disableGameInfoFields() {
-        $gameInfoFields
-            .attr("disabled", "disabled")
-            .css("background-color", "#30292F");
-        //$inputRoundGameField.css('visibility', 'hidden');
-        //$inputGameDateField.css('visibility', 'hidden');
-        let $gameRound = $inputRoundGameField.val();
-        $inputRoundGameField.val("G/R: " + $gameRound)
-    }
-
-    function enableRosterButtons() {
-        activateRosterButtons();
-        $inputTeam1Field.click(function (ev) {
-            alert("yo!");
-        });
-    }
-
-    function startGame() {
-
-    }
-
-    // ////////////////////////////////////////////////////////////////
-    //
     // Start of DEMO mode
     //
     // ////////////////////////////////////////////////////////////////
@@ -287,13 +205,6 @@ $(function () {
 
         // Add Meridian
         addTeam(1, meridian);
-
-        /*
-        $('.grid')
-            .isotope({
-                sortBy: ['gender', 'number']
-            });
-            */
     }
 
     // ////////////////////////////////////////////////////////////////
@@ -353,6 +264,64 @@ $(function () {
                     .addClass('is-checked');
             });
         });
+
+    // ////////////////////////////////////////////////////////////////
+    //
+    // Event-handling functions.
+    //
+    // ////////////////////////////////////////////////////////////////
+
+    function deactivateAllButtons() {
+        $buttons.prop('disabled', true);
+        $buttons.css('background-color', '#333');
+        $buttons.css('color', '#555');
+    }
+
+    function activateRosterButtons() {
+        $buttonsEditRoster.prop('disabled', false);
+        $buttonsEditRoster.addClass('turn-on');
+    }
+
+    function activateBeforePullButtons() {
+        deactivateAllButtons();
+        $buttonsBeforePull.prop('disabled', false);
+        $buttonsBeforePull.css('background-color', '#777');
+        $buttonsBeforePull.css('color', '#fff');
+    }
+
+    function activateAfterThrowButtons() {
+        /*
+        deactivateAllButtons();
+        $buttonsAfterThrow.prop('disabled', false);
+        $buttonsAfterThrow.css('background-color', '#777');
+        $buttonsAfterThrow.css('color', '#fff');
+        */
+    }
+
+    function activateJumpToScoreUI() {
+        $jumpToScoreUI.css('visibility', 'visible');
+    }
+
+    function disableGameInfoFields() {
+        $gameInfoFields
+            .attr("disabled", "disabled")
+            .css("background-color", "#30292F");
+        //$inputRoundGameField.css('visibility', 'hidden');
+        //$inputGameDateField.css('visibility', 'hidden');
+        let $gameRound = $inputRoundGameField.val();
+        $inputRoundGameField.val("G/R: " + $gameRound)
+    }
+
+    function enableRosterButtons() {
+        activateRosterButtons();
+        $inputTeam1Field.click(function (ev) {
+            alert("yo!");
+        });
+    }
+
+    function startGame() {
+
+    }
 
     // ////////////////////////////////////////////////////////////////
     //
@@ -491,16 +460,31 @@ $(function () {
         function (ev) {
             let offset = $(this)
                 .offset();
-            let width = offset.width;
-            let height = offset.height;
-            let x = offset.left;
-            let y = offset.top;
+
+            let width = $(this)
+                .width();
+            let height = $(this)
+                .height();
+
+            //let width = offset.width;
+            //let height = offset.height;
+
+            let offx = offset.left;
+            let offy = offset.top;
 
             console.log(offset);
 
             let fieldSection = ev.target.id;
+            let pagex = ev.pageX;
+            let pagey = ev.pageY;
 
-            console.log("FIELD click @ (" + x + ", " + y + ") - " + fieldSection);
+            let x = pagex - offx;
+            let y = pagey - offy;
+
+            let fieldx = ((x * 100.0) / width);
+            let fieldy = ((y * 37.0) / height);
+
+            console.log("FIELD click @ (" + fieldx + ", " + fieldy + ") - " + fieldSection);
         });
 
 });
