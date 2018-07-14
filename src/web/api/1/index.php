@@ -64,21 +64,19 @@ class AjaxCalls
         $date = $gameInfo['date'];
         $teams = $gameInfo['teams'];
 
-        $team1 = $teams[0];
-        $team2 = $teams[1];
-
-        $name1 = $team1['name'];
-        $name2 = $team2['name'];
+        $name1 = $teams[0];
+        $name2 = $teams[1];
 
         $date = strtotime($date);
         $input = "$date,$event,$round,$name1,$name2";
 
-        $in2 = preg_replace("/\s/", "_", $input);
+        $inputlc = strtolower($input);
+        $in2 = preg_replace("/\s/", "", $inputlc);
 
         $id = md5($in2);
 
         clog("date", $date);
-        clog("input-string", $input);
+        clog("input-string", $inputlc);
         clog("input-string-replaced", $in2);
         clog("game-id", $id);
 

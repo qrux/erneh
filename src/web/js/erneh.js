@@ -1,3 +1,4 @@
+//
 /**
  * Copyright (c) 2018 Troy Wu
  * All rights reserved.
@@ -34,7 +35,9 @@ $(function () {
     ER.ST_AFTER_THROW = 20;
 
     ER.state = ER.ST_BEFORE_GAME;
-    ER.team = [0, 0, 0];
+    ER.teams = [0, 0, 0]; // teams[0] is nothing (since teams are 1-indexed).
+    ER.rosters = [0, 0, 0]; // rosters[0] is nothing (since teams are 1-indexed).
+    ER.game = {};
 
     ER.PREFIX_SEL_ROSTER_GRID = "div#roster-t-";
 
@@ -87,6 +90,30 @@ $(function () {
     cl("button#pull-from-left", $buttonPullFromLeft);
     cl("button#jump-to-score", $buttonJumpToScore);
 
+
+    // ////////////////////////////////////////////////////////////////
+    //
+    // Isotope Grid + Event-handling
+    //
+    // ////////////////////////////////////////////////////////////////
+
+    /*
+    $('.grid')
+        .isotope({
+            // options...
+            itemSelector: '.element-item',
+            layoutMode: 'fitRows',
+            getSortData: {
+                name: '.name',
+                symbol: '.symbol',
+                number: '.number parseInt',
+                gender: '[class]'
+            },
+            sortBy: ['gender', 'number']
+        });
+        */
+
+
     // ////////////////////////////////////////////////////////////////
     //
     // Functions to add players.
@@ -96,24 +123,17 @@ $(function () {
     function addPlayer(team, name, number, gender, symbol) {
         gender = gender.toLowerCase();
 
-        var p = {
+        let p = {
             name: name,
             number: number,
             gender: gender,
             symbol: symbol
         };
 
-        var roster = ER.team[team];
-        if (0 === roster) {
-            roster = {
-                players: {}
-            };
-            ER.team[team] = roster;
-        }
-        roster.players[number.toString()] = p;
+        if (0 === ER.rosters[team]) ER.rosters[team] = {};
+        let roster = ER.rosters[team];
 
-        cl("team " + team + " roster", roster);
-        cl("team " + team + " roster players (ANTE)", ER.team[team]);
+        roster[number] = p;
 
         let $player = _createPlayerNode(team, name, number, gender, symbol);
 
@@ -135,7 +155,8 @@ $(function () {
     }
 
     function addPlayerToTeam(team, text) {
-        console.log("Team " + team + ": " + text);
+        //console.log("Team " + team + ": " + text);
+
         let strings = text.split(",");
 
         let name = strings[0].trim();
@@ -173,8 +194,12 @@ $(function () {
     }
 
     function getTeamRoster(team) {
-        let roster = ER.team[team].roster;
-        cl("roster for team " + team, roster);
+        return ER.rosters[team];
+    }
+
+    function initializeTeamNames(name1, name2) {
+        ER.teams[1] = name1;
+        ER.teams[2] = name2;
     }
 
     function findGrid($node) {
@@ -262,6 +287,13 @@ $(function () {
 
         // Add Meridian
         addTeam(1, meridian);
+
+        /*
+        $('.grid')
+            .isotope({
+                sortBy: ['gender', 'number']
+            });
+            */
     }
 
     // ////////////////////////////////////////////////////////////////
@@ -274,10 +306,6 @@ $(function () {
         .isotope({
             // options...
             itemSelector: '.element-item',
-            cellsByRow: {
-                columnWidth: 150,
-                rowHeight: 150
-            },
             layoutMode: 'fitRows',
             getSortData: {
                 name: '.name',
@@ -360,19 +388,20 @@ $(function () {
             $inputTeam2Field.val('Curve');
         }
 
+        let name1 = $inputTeam1Field.val();
+        let name2 = $inputTeam2Field.val();
+
+        initializeTeamNames(name1, name2);
+
+        let roster1 = getTeamRoster(1);
+        let roster2 = getTeamRoster(2);
+
         gameInfo = {
             event: $gameInputField.val(),
             game: $inputRoundGameField.val(),
             date: $inputGameDateField.val(),
-            teams: [{
-                    name: $inputTeam1Field.val(),
-                    roster: getTeamRoster(1)
-                },
-                {
-                    name: $inputTeam2Field.val(),
-                    roster: getTeamRoster(2)
-                }
-            ]
+            teams: [name1, name2],
+            rosters: [roster1, roster2]
         };
 
         console.log(gameInfo);
