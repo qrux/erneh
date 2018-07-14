@@ -1,3 +1,4 @@
+//
 /**
  * Copyright (c) 2018 Troy Wu
  * All rights reserved.
@@ -334,8 +335,8 @@ label.r-indent {
 .element-item {
   position: relative;
   float: left;
-  width: 110px;
-  height: 110px;
+  width: 100px;
+  height: 100px;
   margin: 5px;
   padding: 10px;
   background: #888;
