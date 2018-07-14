@@ -65,36 +65,36 @@ function api(api, postHash, successHandler, failureHandler, completeHandler) {
     var url = "api/" + api + ".php";
 
     $.ajax({
-               url     : url,
-               data    : postHash,
-               type    : "POST",
-               dataType: "json",
-               success : function (data, textStatus, jqXHR) {
-                   clog("[xhr ok] - " + api + "() - " + textStatus);
+        url: url,
+        data: postHash,
+        type: "POST",
+        dataType: "json",
+        success: function (data, textStatus, jqXHR) {
+            clog("[xhr ok] - " + api + "() - " + textStatus);
 
-                   if (data.success) {
-                       clog("[api ok] - " + api + "() - " + data.mesg);
-                       clog(data);
-                       successHandler(data.data);
-                   } else {
-                       clog("[API ERROR!] - " + api + "() - " + data.error);
-                       clog(data);
-                       successHandler();
-                   }
-               },
-               error   : function (jqXHR, textStatus, errorThrown) {
-                   clog("[XRH ERROR!] - API [ " + api + " ] - " + textStatus + " (" + errorThrown + ")");
-                   if (failureHandler) {
-                       failureHandler();
-                   }
-               },
-               complete: function (jqXHR, textStatus) {
-                   clog("[api] - " + api + "() completed - " + textStatus);
-                   if (completeHandler) {
-                       completeHandler();
-                   }
-               }
-           });
+            if (data.success) {
+                clog("[api ok] - " + api + "() - " + data.mesg);
+                clog(data);
+                successHandler(data.data);
+            } else {
+                clog("[API ERROR!] - " + api + "() - " + data.error);
+                clog(data);
+                successHandler();
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            clog("[XRH ERROR!] - API [ " + api + " ] - " + textStatus + " (" + errorThrown + ")");
+            if (failureHandler) {
+                failureHandler();
+            }
+        },
+        complete: function (jqXHR, textStatus) {
+            clog("[api] - " + api + "() completed - " + textStatus);
+            if (completeHandler) {
+                completeHandler();
+            }
+        }
+    });
 }
 
 function shortenText(text, maxlen, showQuestionMark) {
@@ -163,7 +163,8 @@ function computeDuration(now, then) {
         unit = unit + "s";
     }
 
-    dur = new Number(dur).toFixed(0);
+    dur = new Number(dur)
+        .toFixed(0);
 
     return prefix + dur + "&nbsp;" + unit + "&nbsp;ago";
 }

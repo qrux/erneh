@@ -1,16 +1,43 @@
-let ER = {};
-
-ER.IS_DEMO = true;
-
-ER.ST_BEFORE_GAME = 0;
-ER.ST_BEFORE_PULL = 10;
-ER.ST_AFTER_THROW = 20;
-
-ER.state = ER.ST_BEFORE_GAME;
-
-ER.PREFIX_SEL_ROSTER_GRID = "div#roster-t-";
+/**
+ * Copyright (c) 2018 Troy Wu
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice,
+ * this list of conditions and the following disclaimer.
+ *
+ * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 $(function () {
+    let ER = {};
+
+    ER.IS_DEMO = true;
+
+    ER.ST_BEFORE_GAME = 0;
+    ER.ST_BEFORE_PULL = 10;
+    ER.ST_AFTER_THROW = 20;
+
+    ER.state = ER.ST_BEFORE_GAME;
+    ER.team = [0, 0, 0];
+
+    ER.PREFIX_SEL_ROSTER_GRID = "div#roster-t-";
+
     cl("ER.state", ER);
 
     let $grid1 = $(ER.PREFIX_SEL_ROSTER_GRID + 1 + ' .grid');
@@ -69,12 +96,40 @@ $(function () {
     function addPlayer(team, name, number, gender, symbol) {
         gender = gender.toLowerCase();
 
+        var p = {
+            name: name,
+            number: number,
+            gender: gender,
+            symbol: symbol
+        };
+
+        var roster = ER.team[team];
+        if (0 === roster) {
+            roster = {
+                players: {}
+            };
+            ER.team[team] = roster;
+        }
+        roster.players[number.toString()] = p;
+
+        cl("team " + team + " roster", roster);
+        cl("team " + team + " roster players (ANTE)", ER.team[team]);
+
         let $player = _createPlayerNode(team, name, number, gender, symbol);
+
+        let isIsotopeLoaded = true && (jQuery()
+            .isotope);
+
         if (1 == team) {
-            $grid1.append($player)
-                .isotope('appended', $player);
+            $grid1.append($player);
+            if (isIsotopeLoaded) {
+                $()
+                    .isotope('appended', $player);
+            }
         } else {
-            $grid2.append($player)
+            $grid2.append($player);
+            if (isIsotopeLoaded) {}
+            $()
                 .isotope('appended', $player);
         }
     }
@@ -115,6 +170,80 @@ $(function () {
         player.gender = isMan ? 'm' : 'f';
 
         addPlayer(team, player.name, number, player.gender, player.symbol);
+    }
+
+    function getTeamRoster(team) {
+        let roster = ER.team[team].roster;
+        cl("roster for team " + team, roster);
+    }
+
+    function findGrid($node) {
+        return $node
+            .closest('div.grid-box')
+            .find('div.grid.team-roster');
+    }
+
+    function findTeamNumberFromGrid($grid) {
+        return $grid.attr('id')
+            .substring(1);
+    }
+
+    // ////////////////////////////////////////////////////////////////
+    //
+    // Event-handling functions.
+    //
+    // ////////////////////////////////////////////////////////////////
+
+    function deactivateAllButtons() {
+        $buttons.prop('disabled', true);
+        $buttons.css('background-color', '#333');
+        $buttons.css('color', '#555');
+    }
+
+    function activateRosterButtons() {
+        $buttonsEditRoster.prop('disabled', false);
+        $buttonsEditRoster.addClass('turn-on');
+    }
+
+    function activateBeforePullButtons() {
+        deactivateAllButtons();
+        $buttonsBeforePull.prop('disabled', false);
+        $buttonsBeforePull.css('background-color', '#777');
+        $buttonsBeforePull.css('color', '#fff');
+    }
+
+    function activateAfterThrowButtons() {
+        /*
+        deactivateAllButtons();
+        $buttonsAfterThrow.prop('disabled', false);
+        $buttonsAfterThrow.css('background-color', '#777');
+        $buttonsAfterThrow.css('color', '#fff');
+        */
+    }
+
+    function activateJumpToScoreUI() {
+        $jumpToScoreUI.css('visibility', 'visible');
+    }
+
+    function disableGameInfoFields() {
+        $gameInfoFields
+            .attr("disabled", "disabled")
+            .css("background-color", "#30292F");
+        //$inputRoundGameField.css('visibility', 'hidden');
+        //$inputGameDateField.css('visibility', 'hidden');
+        let $gameRound = $inputRoundGameField.val();
+        $inputRoundGameField.val("G/R: " + $gameRound)
+    }
+
+    function enableRosterButtons() {
+        activateRosterButtons();
+        $inputTeam1Field.click(function (ev) {
+            alert("yo!");
+        });
+    }
+
+    function startGame() {
+
     }
 
     // ////////////////////////////////////////////////////////////////
@@ -159,12 +288,6 @@ $(function () {
             sortBy: ['gender', 'number']
         });
 
-    function findGrid($node) {
-        return $node
-            .closest('div.grid-box')
-            .find('div.grid.team-roster');
-    }
-
     // bind filter button click - TROY dynamic grid
     $('.filters-button-group')
         .on('click', 'button.button', function () {
@@ -205,7 +328,7 @@ $(function () {
 
     // ////////////////////////////////////////////////////////////////
     //
-    // Custom Event-handling.
+    // Event-handling triggers.
     //
     // ////////////////////////////////////////////////////////////////
 
@@ -273,73 +396,21 @@ $(function () {
             function () {});
     });
 
-    $formAddTeam1.submit(function (ev) {
+    let $rosterForms = $('div.grid-box form');
+
+    $rosterForms.submit(function (ev) {
         ev.preventDefault();
-        console.log("Adding player to Team 1");
-        let text = $formAddTeam1.find('input')
+
+        let $grid = findGrid($(this));
+        let team = findTeamNumberFromGrid($grid);
+
+        console.log("Adding player to Team " + team);
+        let text = $(this)
+            .find('input')
             .val();
-        addPlayerToTeam(1, text);
+
+        addPlayerToTeam(team, text);
     });
-
-    $formAddTeam2.submit(function (ev) {
-        ev.preventDefault();
-        console.log("Adding player to Team 2");
-        let text = $formAddTeam2.find('input')
-            .val();
-        addPlayerToTeam(2, text);
-    });
-
-    function deactivateAllButtons() {
-        $buttons.prop('disabled', true);
-        $buttons.css('background-color', '#333');
-        $buttons.css('color', '#555');
-    }
-
-    function activateRosterButtons() {
-        $buttonsEditRoster.prop('disabled', false);
-        $buttonsEditRoster.addClass('turn-on');
-    }
-
-    function activateBeforePullButtons() {
-        deactivateAllButtons();
-        $buttonsBeforePull.prop('disabled', false);
-        $buttonsBeforePull.css('background-color', '#777');
-        $buttonsBeforePull.css('color', '#fff');
-    }
-
-    function activateAfterThrowButtons() {
-        /*
-        deactivateAllButtons();
-        $buttonsAfterThrow.prop('disabled', false);
-        $buttonsAfterThrow.css('background-color', '#777');
-        $buttonsAfterThrow.css('color', '#fff');
-        */
-    }
-
-    function activateJumpToScoreUI() {
-        $jumpToScoreUI.css('visibility', 'visible');
-    }
-
-    function disableGameInfoFields() {
-        $gameInfoFields
-            .attr("disabled", "disabled")
-            .css("background-color", "#30292F");
-        //$inputRoundGameField.css('visibility', 'hidden');
-        //$inputGameDateField.css('visibility', 'hidden');
-        let $gameRound = $inputRoundGameField.val();
-        $inputRoundGameField.val("G/R: " + $gameRound)
-    }
-
-    function enableRosterButtons() {
-        activateRosterButtons();
-        $inputTeam1Field.click(function (ev) {
-            alert("yo!");
-        });
-    }
-
-    function startGame() {
-
-    }
 
     $buttonPullFromLeft.click(function (ev) {
         activateAfterThrowButtons();
@@ -380,6 +451,12 @@ $(function () {
      console.log(id + " - click @ (" + x + ", " + y + ")");
      });
      */
+
+    // ////////////////////////////////////////////////////////////////
+    //
+    // Field-handling (position + distance).
+    //
+    // ////////////////////////////////////////////////////////////////
 
     $field.on('click',
         function (ev) {
