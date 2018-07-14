@@ -17,6 +17,7 @@ header("Pragma: no-cache");
     <script type="text/javascript" src="js/lib/isotope.pkgd.min.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/erneh-data.js"></script>
+    <script type="text/javascript" src="js/erneh-utils.js"></script>
     <script type="text/javascript" src="js/erneh.js"></script>
 
 </head>
@@ -87,7 +88,7 @@ header("Pragma: no-cache");
     </div>
 
     <div id="team-rosters">
-        <div id="roster-t1">
+        <div id="roster-t-1" class="grid-box 1">
             <form id="t1-add-player-form">
                 <fieldset id="fs-t1">
                     <label>Add Team 1 Player</label>
@@ -111,7 +112,7 @@ header("Pragma: no-cache");
             </div>
             <div class="grid team-roster"></div>
         </div>
-        <div id="roster-t2">
+        <div id="roster-t-2" class="grid-box 2">
             <form id="t2-add-player-form">
                 <fieldset id="fs-t2">
                     <button class="button" type="submit">+</button>

@@ -262,7 +262,7 @@ div#team-rosters {
     margin: 0 5em;
 }
 
-div#roster-t1 {
+div#roster-t-1 {
     display: inline-block;
     left: 0;
     width: 50%;
@@ -270,7 +270,7 @@ div#roster-t1 {
     text-align: center;
 }
 
-div#roster-t2 {
+div#roster-t-2 {
     display: inline-block;
     right: 0;
     width: 49%;
@@ -278,19 +278,21 @@ div#roster-t2 {
     text-align: center;
 }
 
+/*
+div#roster-t1 input {
+    text-align: left;
+}
+
+div#roster-t1 input {
+    text-align: left;
+}
+*/
+
 div#team-rosters form {
 }
 
 div#team-rosters fieldset {
     border: 0;
-}
-
-div#roster-t1 input {
-    text-align: left;
-}
-
-div#roster-t1 input {
-    text-align: left;
 }
 
 label.l-indent {
