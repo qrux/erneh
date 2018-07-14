@@ -159,66 +159,36 @@ $(function () {
             sortBy: ['gender', 'number']
         });
 
-    // bind filter button click
-    $('.filters-button-group')
-        .on('click', 'button.button1', function () {
-            console.log("CLICKED!");
+    function findGrid($node) {
+        return $node
+            .closest('div.grid-box')
+            .find('div.grid.team-roster');
+    }
 
+    // bind filter button click - TROY dynamic grid
+    $('.filters-button-group')
+        .on('click', 'button.button', function () {
             let filterValue = $(this)
                 .attr('data-filter');
-
-            console.log("filter-value: " + filterValue);
-
             // use filterFn if matches value
             filterValue = filterFns[filterValue] || filterValue;
-
-            console.log(filterValue);
-
-            $grid1.isotope({
-                filter: filterValue
-            });
-        });
-
-    $('.filters-button-group')
-        .on('click', 'button.button2', function () {
-            console.log("CLICKED!");
-
-            let filterValue = $(this)
-                .attr('data-filter');
-
-            console.log("filter-value: " + filterValue);
-
-            // use filterFn if matches value
-            filterValue = filterFns[filterValue] || filterValue;
-
-            console.log(filterValue);
-
-            $grid2.isotope({
-                filter: filterValue
-            });
+            findGrid($(this))
+                .isotope({
+                    filter: filterValue
+                });
         });
 
     // bind sort button click
     $('.sort-by-button-group')
-        .on('click', 'button.button1', function () {
+        .on('click', 'button.button', function () {
             let sortValue = $(this)
                 .attr('data-sort-value');
             // make an array of values
             sortValue = sortValue.split(',');
-            $grid1.isotope({
-                sortBy: sortValue
-            });
-        });
-    // bind sort button click
-    $('.sort-by-button-group')
-        .on('click', 'button.button2', function () {
-            let sortValue = $(this)
-                .attr('data-sort-value');
-            // make an array of values
-            sortValue = sortValue.split(',');
-            $grid2.isotope({
-                sortBy: sortValue
-            });
+            findGrid($(this))
+                .isotope({
+                    sortBy: sortValue
+                });
         });
 
     // change is-checked class on buttons
